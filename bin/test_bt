@@ -2,6 +2,7 @@
 
 if ([ "$1" != "on" ] && [ "$1" != "off" ])
    then
+      echo "Turning bluetooth on or off using /sys/"
       echo "usage: $0 on|off"
       exit 
 fi

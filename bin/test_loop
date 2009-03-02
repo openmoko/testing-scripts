@@ -1,0 +1,57 @@
+#!/bin/sh
+
+command=$1
+loop_count=$2
+
+usage() {
+   echo "repeat the given command loop_count times"
+   echo "$1"
+   echo "$0 command loop_count"
+   exit
+}
+
+if [ -z "$2" ]
+   then
+      usage "Error: missing paramater"
+fi
+
+if [ ! -f "$command" ]
+   then
+      command="`which $1 2>/dev/null`"
+      if [ ! -f "$command" ]
+         then
+            usage "Error: command '$1' not found"
+     fi
+fi
+
+if [ ! -x "$command" ]
+   then
+      usage "Error: command '$1' not executable"
+fi
+
+if [ $loop_count -eq $loop_count 2> /dev/null ]
+   then
+        echo "" > /dev/null
+   else
+        usage "Error: loop_count has to be a number"
+fi
+
+if [ $loop_count -lt 1 ]
+   then
+      usage "Error: loop_count needs to be greater than 1"
+fi
+
+if [ $loop_count -gt 1000 ]
+   then
+      usage "Error: loop_count needs to be smaller than 1000"
+fi
+
+count=0
+
+while [ $count -lt $loop_count ]
+   do
+      count=`expr $count + 1`
+      echo "Loop $count: running $command"
+      $command
+   done
+
