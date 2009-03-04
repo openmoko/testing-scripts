@@ -15,20 +15,6 @@ if [ -z "$2" ]
       usage "Error: missing paramater"
 fi
 
-if [ ! -f "$command" ]
-   then
-      command="`which $1 2>/dev/null`"
-      if [ ! -f "$command" ]
-         then
-            usage "Error: command '$1' not found"
-     fi
-fi
-
-if [ ! -x "$command" ]
-   then
-      usage "Error: command '$1' not executable"
-fi
-
 if [ $loop_count -eq $loop_count 2> /dev/null ]
    then
         echo "" > /dev/null
@@ -52,6 +38,6 @@ while [ $count -lt $loop_count ]
    do
       count=`expr $count + 1`
       echo "Loop $count: running $command"
-      $command
+      eval "$command"
    done
 
