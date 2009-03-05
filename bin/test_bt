@@ -11,7 +11,7 @@ if [ "$1" == "on" ]
    then
       echo "Activating bluetooth ... "
       echo 1 > /sys/bus/platform/devices/neo1973-pm-bt.0/power_on
-      echo 1 > /sys/bus/platform/devices/neo1973-pm-bt.0/reset
+      echo 0 > /sys/bus/platform/devices/neo1973-pm-bt.0/reset
    else
       echo "Deactivating bluetooth ... "
       echo 0 > /sys/bus/platform/devices/neo1973-pm-bt.0/power_on
