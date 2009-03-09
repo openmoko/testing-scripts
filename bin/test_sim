@@ -1,0 +1,54 @@
+#!/bin/sh
+
+usage() {
+   echo "use the freesmartphone.org framework to access sim card functions"
+   echo "$1"
+   echo "$0 command"
+   echo "possible commands:"
+   echo " * ListPhonebooks | lpb"
+   echo " * GetPhonebook | gpb PhonebookName"
+   echo " * GetMessagebook | gmb <all | read | unread | sent | unsent>"
+   echo " * GetMessage | gm <index>"
+   echo " * DeleteMessage | dm <index>"
+   exit
+}
+
+case "$1" in
+	ListPhonebooks|lpb)	parameter="ListPhonebooks"
+				;;
+	GetPhonebook|gpb)	if [ -z "$2" ]
+				   then
+				      usage "Error: The command 'GetPhonebook' needs a phone book name as second parameter"
+				fi
+				parameter="RetrievePhonebook $2"
+				;;
+	GetMessagebook|gmb)	if [ -z "$2" ]
+				   then
+				      mb="all"
+				   else
+				      if ([ "$2" != "read" ] && [ "$2" != "unread" ] && [ "$2" != "sent" ] && [ "$2" != "unsent" ])
+				         then
+				            usage "Error: The parameter ($2) for 'GetMessagebook' needs to be: read|unread|sent|unsent"
+				         else
+				            mb="$2"
+				      fi
+				fi
+				parameter="RetrieveMessagebook $mb"
+				;;
+	DeleteMessage|dm)       if [ -z "$2" ]
+				   then
+				      usage "Error: The command 'DeleteMessage' needs an index number as second parameter"
+				fi
+				parameter="DeleteMessage $2"
+				;;
+        GetMessage|gm)		if [ -z "$2" ]
+        			   then
+        			      usage "Error: The command 'GetMessage' needs an index number as second parameter"
+        			fi
+        			parameter="RetrieveMessage $2"
+        			;;
+	*) usage "Error: Missing parameter"
+esac
+
+mdbus -s org.freesmartphone.ogsmd /org/freesmartphone/GSM/Device org.freesmartphone.GSM.SIM.$parameter
+
