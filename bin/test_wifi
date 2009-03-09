@@ -1,0 +1,21 @@
+#!/bin/sh
+
+if ([ "$1" != "on" ] && [ "$1" != "off" ])
+   then
+      echo "Turning wifi on or off using FSO"
+      echo "Error: missing or wrong paramater"
+      echo "usage: $0 on|off"
+      exit 
+fi
+
+if [ "$1" == "on" ]
+   then
+      echo "Activating wifi ... "
+      mdbus -s org.freesmartphone.ousaged /org/freesmartphone/Usage org.freesmartphone.Usage.SetResourcePolicy WiFi enabled
+   else
+      echo "Deactivating wifi ... "
+      mdbus -s org.freesmartphone.ousaged /org/freesmartphone/Usage org.freesmartphone.Usage.SetResourcePolicy WiFi disabled
+fi
+
+echo "Performing test scan: "
+iwlist scan

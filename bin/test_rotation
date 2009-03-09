@@ -3,6 +3,7 @@
 if ([ -z "$1" ] || ([ "$1" -ne 0 ] && [ "$1" -ne 1 ] && [ "$1" -ne 2 ] && [ "$1" -ne 3 ]))
    then
       echo "rotate the screen using xrandr"
+      echo "Error: missing or wrong paramater"
       echo "usage: $0 0|1|2|3"
       exit
 fi
