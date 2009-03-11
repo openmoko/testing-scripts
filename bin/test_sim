@@ -7,7 +7,7 @@ usage() {
    echo "possible commands:"
    echo " * ListPhonebooks | lpb"
    echo " * GetPhonebook | gpb PhonebookName"
-   echo " * GetMessagebook | gmb <all | read | unread | sent | unsent>"
+   echo " * GetMessagebook | gmb <read | unread | sent | unsent>"
    echo " * GetMessage | gm <index>"
    echo " * DeleteMessage | dm <index>"
    exit
